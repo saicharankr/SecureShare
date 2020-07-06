@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>Document Upload</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="(*.*)" style="display:none;" />
+    <ion-card>
+        <ion-card-title class="center">
+            <ion-label>Upload Files</ion-label>
+        </ion-card-title>
+        <ion-card-content>
+            <ion-list *ngFor="let file of files; let i=index">
+                <ion-list>
+                    <ion-item class="item" lines="none">
+                        <ion-label>Upload Files</ion-label>
+                        <ion-progress-bar color="primary" [value]="file.progress"></ion-progress-bar>
+                        <ion-spinner *ngIf="file.progress != 100 && status != 0 " name="bubbles"></ion-spinner>
+                    </ion-item>
+                    <ion-item *ngIf="file.progress == 100 && status != 0 " lines="none">
+                        <h4>Upload Success</h4>
+                    </ion-item>
+                    <ion-item *ngIf="file.progress != 100 && status != 0 " lines="none">
+                        <h4>Upload in Progess</h4>
+                    </ion-item>
+                    <ion-item *ngIf="file.progress != 100 && status == 0" lines="none">
+                        <h4>Upload Failed</h4>
+                    </ion-item>
+                    <ion-item *ngIf="file.progress == 100 && status != 0 " lines="none">
+                        <ion-text>
+                            <h4> Here is the link to your file :- <a>{{shareLink}}</a></h4>
+                            <ion-button ngxClipboard [cbContent]="shareLink">Copy Link</ion-button>
+                        </ion-text>
+                    </ion-item>
+                </ion-list>
+            </ion-list>
+        </ion-card-content>
+        <div class="center">
+            <ion-button color="warning" (click)="onClick()">
+                <ion-icon slot="end" name="cloud-upload-outline"></ion-icon> Upload </ion-button>
+        </div>
+    </ion-card>
+</ion-content>
